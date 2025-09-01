@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-Database setup script for CertCoach development environment.
+Simplified database setup script for CertCoach.
 
-This script sets up the PostgreSQL database with pgvector extension
-and creates the initial schema using Alembic migrations.
+Sets up Supabase database with optimized schema and enables required extensions.
 """
 
 import os
@@ -62,13 +61,13 @@ async def check_database_connection():
 
 def setup_database_schema():
     """Set up database schema using Alembic."""
-    print("\n📊 Setting up database schema...")
+    print("\n📊 Setting up simplified database schema...")
     
     # Create initial migration if it doesn't exist
     if not any(Path("migrations/versions").glob("*.py")):
         print("Creating initial migration...")
         success = run_command(
-            "alembic revision --autogenerate -m 'Initial schema with all models'",
+            ".venv\\Scripts\\python.exe -m alembic revision --autogenerate -m 'Initial simplified schema'",
             "Generating initial migration"
         )
         if not success:
@@ -76,53 +75,19 @@ def setup_database_schema():
     
     # Run migrations
     success = run_command(
-        "alembic upgrade head",
+        ".venv\\Scripts\\python.exe -m alembic upgrade head",
         "Applying database migrations"
     )
     
     if success:
-        print("✅ Database schema setup complete")
+        print("✅ Simplified database schema setup complete")
     return success
-
-
-def setup_pgvector():
-    """Instructions for setting up pgvector extension."""
-    print("\n🗄️  PostgreSQL + pgvector Setup Instructions")
-    print("=" * 50)
-    print("""
-To set up the database with pgvector extension, run these commands:
-
-1. Using Docker (Recommended for development):
-   docker run -d \\
-     --name certcoach-postgres \\
-     -e POSTGRES_DB=certcoach \\
-     -e POSTGRES_USER=certcoach \\
-     -e POSTGRES_PASSWORD=certcoach_dev \\
-     -p 5432:5432 \\
-     ankane/pgvector
-
-2. Or install PostgreSQL and pgvector locally:
-   # On macOS with Homebrew:
-   brew install postgresql pgvector
-   
-   # On Ubuntu/Debian:
-   sudo apt-get install postgresql postgresql-contrib
-   # Then compile and install pgvector from source
-   
-   # Create database and user:
-   sudo -u postgres createuser -d certcoach
-   sudo -u postgres createdb -O certcoach certcoach
-   sudo -u postgres psql -c "CREATE EXTENSION vector;" certcoach
-
-3. Update your .env file with the database URL:
-   DATABASE_URL=postgresql://certcoach:certcoach_dev@localhost:5432/certcoach
-""")
 
 
 async def main():
     """Main setup function."""
-    print("🚀 CertCoach Database Setup")
-    print("=" * 40)
+    print("🚀 CertCoach Simplified Database Setup")
+    print("=" * 50)
     
     # Load environment variables
     from dotenv import load_dotenv
@@ -132,18 +97,21 @@ async def main():
     database_url = os.getenv("DATABASE_URL")
     if not database_url:
         print("❌ DATABASE_URL not found in environment")
-        print("   Please create a .env file with your database configuration")
+        print("   Please create a .env file with your Supabase database configuration")
         print("   Example: cp .env.example .env")
-        setup_pgvector()
+        print("\n📝 Supabase Setup Instructions:")
+        print("   1. Create project at https://supabase.com/dashboard")
+        print("   2. Get connection details from Settings → Database")
+        print("   3. Enable pgvector: CREATE EXTENSION IF NOT EXISTS vector;")
+        print("   4. Update .env with your credentials")
         return False
     
-    print(f"📊 Database URL: {database_url}")
+    print(f"📊 Database URL: {database_url.split('@')[1] if '@' in database_url else 'configured'}")
     
     # Test database connection
     connection_ok = await check_database_connection()
     if not connection_ok:
         print("\n❌ Database connection failed!")
-        setup_pgvector()
         return False
     
     # Setup schema
@@ -152,10 +120,11 @@ async def main():
         print("❌ Schema setup failed!")
         return False
     
-    print("\n🎉 Database setup completed successfully!")
+    print("\n🎉 Simplified database setup completed successfully!")
     print("\nNext steps:")
     print("1. Run: python scripts/seed_blueprints.py")
-    print("2. Start the API gateway: uvicorn services.api-gateway.main:app --reload")
+    print("2. Start API: python -m uvicorn services.api.main:app --reload")
+    print("3. View docs: http://localhost:8000/docs")
     
     return True
 

@@ -1,177 +1,331 @@
-# CertCoach
+# 🎓 CertCoach - Adaptive Certification Exam Preparation Platform
 
-An adaptive exam preparation platform that uses blueprint-driven study planning, spaced repetition, and AI-powered practice sessions to help professionals master technical certifications.
+**Intelligent, blueprint-driven study planning with AI-powered practice sessions and spaced repetition.**
 
-## 🎯 Product Vision
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.116.1-009639.svg?style=flat&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
+[![Supabase](https://img.shields.io/badge/Supabase-181818?style=flat&logo=supabase&logoColor=white)](https://supabase.com)
 
-CertCoach transforms exam preparation through four core pillars:
+## 🌟 **Core Features**
 
-1. **Blueprint-first Study Planner** - Plans based on official exam weights, auto-reschedules on slips, exports to calendar
-2. **Adaptive Practice Engine** - 2-3 reviews + 8-12 focus items with rationales and official documentation links  
-3. **Mastery Map + Weekly Mocks** - Per-objective probability tracking with gap analysis and plan adjustments
-4. **Notes → Flashcards** - One-click spaced repetition system from your own study notes
+### 🎯 **Blueprint-First Study Planner**
+- **Weighted scheduling** based on official exam blueprints
+- **Auto-reschedule** missed sessions with intelligent gap filling
+- **Calendar integration** with iCal export for external apps
+- **Progress tracking** with mastery-based timeline adjustments
 
-## 🏗 Architecture
+### 🧠 **Adaptive Practice Engine**
+- **Smart session assembly**: 2-3 reviews + 8-12 focus items
+- **FSRS spaced repetition** for optimal memory retention
+- **Difficulty adaptation** based on user performance
+- **Contextual explanations** with official documentation links
 
-**Monorepo Structure** (Turborepo)
-- **Apps**: Next.js web app, React Native mobile app
-- **Services**: 7 microservices (FastAPI) for modular functionality  
-- **Packages**: Shared UI components, TypeScript configs, Python utilities
-- **Data**: Exam blueprints and seed content
-- **Infrastructure**: Terraform, Docker, CI/CD workflows
+### 📊 **Mastery Map & Analytics**
+- **Bayesian mastery tracking** per learning objective
+- **Gap analysis** highlighting weak areas
+- **Weekly mock exams** with performance insights
+- **Study velocity** and confidence interval tracking
 
-**Tech Stack**
-- Frontend: Next.js, React Native + Expo, TypeScript
-- Backend: Python FastAPI microservices
-- Database: PostgreSQL + pgvector, Redis
-- Observability: OpenTelemetry, Prometheus, Grafana
-- Package Management: uv (Python), npm (Node.js)
+### 📝 **Notes → Flashcards Pipeline**
+- **One-click conversion** from markdown notes to flashcards
+- **Vector semantic search** across all study materials
+- **Integrated SRS scheduling** with the practice engine
+- **Automatic Q&A extraction** from structured notes
 
-## 🚀 Quick Start
+## 🏗️ **Architecture Overview**
 
-### Prerequisites
-- Node.js 18+
-- Python 3.12+
-- uv package manager
-- PostgreSQL 15+
-- Redis 7+
+### **Simplified Single-Service Design**
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Next.js Web   │────│   FastAPI Backend │────│  Supabase DB    │
+│   Frontend      │    │   (Single Service) │    │  + Auth + RT    │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                              │
+                       ┌──────────────────┐
+                       │   Redis Cache    │
+                       │   + Job Queue    │
+                       └──────────────────┘
+```
 
-### Development Setup
+### **Technology Stack**
+- **Backend**: FastAPI with async SQLAlchemy
+- **Database**: Supabase (PostgreSQL + pgvector + Auth)
+- **Cache/Queue**: Redis for sessions and background jobs
+- **AI/ML**: OpenAI API for embeddings and content generation
+- **Frontend**: Next.js with TypeScript and Tailwind CSS
+- **Mobile**: React Native + Expo (roadmap)
 
-1. **Clone and install dependencies**
-   ```bash
-   git clone https://github.com/aiden-krain/certcoach.git
-   cd certcoach
-   
-   # Install Node.js dependencies
-   npm install
-   
-   # Install Python dependencies with uv
-   uv sync --dev
-   ```
-
-2. **Setup environment**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configuration
-   ```
-
-3. **Start development servers**
-   ```bash
-   # Start all services in development mode
-   npm run dev
-   
-   # Or start specific services
-   turbo dev --filter=web
-   turbo dev --filter=api-gateway
-   ```
-
-## 📁 Project Structure
+## 📁 **Repository Structure**
 
 ```
 certcoach/
-├─ apps/
-│  ├─ web/                    # Next.js web application
-│  └─ mobile/                 # React Native + Expo mobile app
-├─ services/
-│  ├─ api-gateway/            # FastAPI gateway, auth, routing
-│  ├─ planner/                # Study planning service
-│  ├─ practice-engine/        # Session assembly and grading
-│  ├─ item-factory/           # AI-powered item generation
-│  ├─ mastery-srs/            # Mastery tracking + spaced repetition
-│  ├─ explain-rag/            # Documentation anchors + citations
-│  └─ telemetry/              # Analytics and reweighting
-├─ packages/
-│  ├─ ui/                     # Shared React components
-│  ├─ ts-config/              # Shared TypeScript configuration
-│  ├─ python-common/          # Shared Python utilities
-│  └─ schemas/                # OpenAPI and JSON schemas
-├─ data/
-│  ├─ blueprints/             # Exam blueprints (DP-700, DBX-DEA)
-│  └─ seeds/                  # Starter items and challenge sets
-├─ infra/                     # Infrastructure as code
-├─ scripts/                   # Utility scripts
-└─ docs/                      # Documentation and ADRs
+├── services/
+│   └── api/                    # Main FastAPI backend service
+│       ├── main.py            # FastAPI application entry point
+│       ├── routers/           # API route handlers
+│       │   ├── health.py      # Health checks and monitoring
+│       │   ├── auth.py        # Authentication endpoints
+│       │   ├── study_plans.py # Study plan management
+│       │   ├── practice.py    # Practice session API
+│       │   ├── mastery.py     # Mastery tracking
+│       │   └── notes.py       # Notes and flashcards
+│       ├── core/              # Business logic modules
+│       │   ├── planner.py     # Study plan generation
+│       │   ├── practice.py    # Practice engine + FSRS
+│       │   ├── mastery.py     # Bayesian mastery tracking
+│       │   └── calendar.py    # iCal export functionality
+│       ├── models/            # Pydantic request/response models
+│       │   ├── study_plans.py # Study plan schemas
+│       │   ├── practice.py    # Practice session schemas
+│       │   └── notes.py       # Notes and flashcard schemas
+│       ├── middleware/        # FastAPI middleware
+│       │   ├── auth.py        # JWT authentication
+│       │   └── logging.py     # Request/response logging
+│       └── dependencies.py   # Shared FastAPI dependencies
+├── packages/
+│   └── database/              # Shared database layer
+│       ├── models.py         # SQLAlchemy ORM models
+│       └── connection.py     # Database connection management
+├── data/
+│   ├── blueprints/           # Exam blueprint definitions
+│   │   ├── dp-700.yaml       # Microsoft DP-700 blueprint
+│   │   └── databricks-dea.yaml # Databricks DEA blueprint
+│   └── templates/            # Question templates
+│       ├── scenario_mcq.py   # Multi-choice scenarios
+│       ├── code_output.py    # Code execution questions
+│       └── troubleshoot.py   # Problem-solving scenarios
+├── scripts/
+│   ├── setup_database.py    # Database initialization
+│   ├── seed_blueprints.py   # Blueprint data loading
+│   └── seed_sample_data.py  # Development sample data
+├── migrations/               # Alembic database migrations
+├── docs/                    # Comprehensive documentation
+│   └── ARCHITECTURE_COMPONENTS.md # Detailed component docs
+└── tests/                   # Test suites (unit + integration)
 ```
 
-## 🎓 Supported Certifications
+## 🗄️ **Database Schema**
 
-### Currently Available
-- **DP-700**: Microsoft Fabric Data Engineer
-- **Databricks Data Engineer Associate**
+### **Core Tables (8 Optimized Tables)**
+```sql
+-- User Management
+users                  -- Supabase-integrated user accounts
+study_plans           -- User study plans with timelines
+study_sessions        -- Individual practice sessions
 
-### Planned
-- Azure Data Engineer Associate (DP-203)
-- AWS Data Engineer Professional
-- Google Cloud Professional Data Engineer
+-- Content & Assessment  
+exam_blueprints       -- Official exam structure definitions
+objectives           -- Hierarchical learning objectives
+practice_items       -- Questions with metadata and solutions
 
-## 🔧 Development Commands
+-- Learning & Progress
+attempts             -- User responses with FSRS scheduling
+mastery_records      -- Bayesian mastery probability per objective
+notes               -- User notes with vector embeddings + flashcards
+```
+
+### **Key Relationships**
+- Users → Study Plans (1:N) → Sessions (1:N)
+- Blueprints → Objectives (1:N) → Practice Items (1:N)
+- Users + Items → Attempts (N:N) → Mastery Updates
+- Notes → Vector Search + Flashcard Generation
+
+## 🚀 **Quick Start**
+
+### **Prerequisites**
+- Python 3.12+
+- Node.js 18+ (for frontend)
+- Supabase account
+- Redis (optional, for caching)
+
+### **1. Environment Setup**
+```bash
+# Clone repository
+git clone https://github.com/your-org/certcoach.git
+cd certcoach
+
+# Install Python dependencies
+uv sync --dev
+
+# Create environment file
+cp .env.example .env
+# Edit .env with your Supabase credentials
+```
+
+### **2. Database Setup**
+```bash
+# Initialize database schema
+python scripts/setup_database.py
+
+# Load exam blueprints
+python scripts/seed_blueprints.py
+
+# (Optional) Load sample data for development
+python scripts/seed_sample_data.py
+```
+
+### **3. Start Development Server**
+```bash
+# Start FastAPI backend
+python -m uvicorn services.api.main:app --reload
+
+# API documentation available at:
+# http://localhost:8000/docs
+```
+
+### **4. Frontend Setup (Coming Soon)**
+```bash
+cd apps/web
+npm install
+npm run dev
+# Frontend available at http://localhost:3000
+```
+
+## 🔧 **Configuration**
+
+### **Environment Variables**
+```bash
+# Database & Authentication
+DATABASE_URL=postgresql://postgres:[password]@db.[project].supabase.co:5432/postgres
+SUPABASE_URL=https://[project].supabase.co
+SUPABASE_ANON_KEY=[anon-key]
+SUPABASE_SERVICE_ROLE_KEY=[service-key]
+
+# AI & Content Generation
+OPENAI_API_KEY=[your-openai-key]
+DEFAULT_EMBEDDING_MODEL=all-MiniLM-L6-v2
+
+# Performance & Caching
+REDIS_URL=redis://localhost:6379/0
+DB_POOL_SIZE=5
+SLOW_QUERY_THRESHOLD=1.0
+
+# Study Planning Defaults
+DEFAULT_SESSION_DURATION_MINUTES=45
+DEFAULT_DAILY_STUDY_HOURS=1.0
+MASTERY_PROBABILITY_THRESHOLD=0.8
+```
+
+## 📚 **API Documentation**
+
+### **Authentication**
+```bash
+POST /api/v1/auth/register    # User registration
+POST /api/v1/auth/login       # User authentication
+GET  /api/v1/auth/profile     # Get user profile
+```
+
+### **Study Planning**
+```bash
+POST /api/v1/study-plans      # Create study plan
+GET  /api/v1/study-plans      # List user's plans
+GET  /api/v1/study-plans/{id} # Get specific plan
+PUT  /api/v1/study-plans/{id} # Update plan
+GET  /api/v1/study-plans/{id}/calendar # Export iCal
+```
+
+### **Practice Sessions**
+```bash
+POST /api/v1/practice/sessions # Generate practice session
+POST /api/v1/practice/attempts # Submit answer attempt
+GET  /api/v1/practice/review-queue # Get items due for review
+```
+
+### **Mastery & Analytics**
+```bash
+GET /api/v1/mastery/{user_id}       # Overall mastery overview
+GET /api/v1/mastery/objectives/{id} # Per-objective mastery
+GET /api/v1/mastery/gaps           # Gap analysis report
+```
+
+### **Notes & Flashcards**
+```bash
+POST /api/v1/notes                # Create note
+GET  /api/v1/notes/search         # Semantic search
+POST /api/v1/notes/{id}/flashcards # Generate flashcards
+GET  /api/v1/notes/flashcards/due  # Get due flashcards
+```
+
+## 🧪 **Testing**
 
 ```bash
-# Development
-npm run dev              # Start all development servers
-npm run build           # Build all applications
-npm run test            # Run all tests
-npm run lint            # Lint all code
-npm run type-check      # TypeScript type checking
+# Run all tests
+pytest
 
-# Python services
-uv run alembic upgrade head    # Run database migrations
-uv run pytest                 # Run Python tests
-uv run mypy .                  # Type check Python code
+# Run with coverage
+pytest --cov=services --cov=packages --cov-report=html
 
-# Individual services
-turbo dev --filter=web         # Start web app only
-turbo build --filter=mobile    # Build mobile app only
+# Run specific test categories
+pytest tests/unit/          # Unit tests
+pytest tests/integration/   # Integration tests  
+pytest tests/api/           # API endpoint tests
 ```
 
-## 🧪 Testing
+## 🚀 **Deployment**
 
-- **Unit Tests**: Jest (TypeScript), pytest (Python)
-- **Integration Tests**: Automated API testing with test databases
-- **E2E Tests**: Playwright for critical user journeys
-- **Load Tests**: k6 for performance validation
+### **Development**
+```bash
+# Local development with hot reload
+python -m uvicorn services.api.main:app --reload --port 8000
+```
 
-## 📊 Monitoring & Observability
+### **Production**
+```bash
+# Using Gunicorn with uvicorn workers
+gunicorn services.api.main:app -w 4 -k uvicorn.workers.UvicornWorker
+```
 
-- **Metrics**: Prometheus + Grafana dashboards
-- **Tracing**: OpenTelemetry distributed tracing
-- **Logs**: Structured logging with correlation IDs
-- **Alerts**: Critical path SLO monitoring
+### **Docker**
+```bash
+# Build and run with Docker
+docker build -t certcoach-api .
+docker run -p 8000:8000 --env-file .env certcoach-api
+```
 
-## 🛡 Security & Compliance
+## � **Documentation**
 
-- **Authentication**: JWT + OAuth (GitHub/Microsoft)
-- **Authorization**: Row-level security with user isolation
-- **Data Privacy**: GDPR/CCPA compliant data handling
-- **Content**: Licensed documentation only, provenance tracking
-- **Infrastructure**: Encrypted at rest, secrets management
+### **Component Documentation**
+- **[Architecture Components](docs/ARCHITECTURE_COMPONENTS.md)** - Detailed documentation of each component, its purpose, and how it works
+- **[API Reference](http://localhost:8000/docs)** - Interactive OpenAPI documentation (when server is running)
+- **[Database Schema](docs/DATABASE_SCHEMA.md)** - Complete database schema documentation
+- **[Development Guide](docs/DEVELOPMENT.md)** - Development setup and contribution guidelines
 
-## 📈 Performance Targets
+### **Architecture Overview**
+The simplified architecture consolidates all backend functionality into a single FastAPI service with clear separation of concerns:
 
-- Session assembly: < 700ms (p95)
-- Weekly mock grading: < 3s
-- Mobile drill loading: < 300ms
-- API response times: < 200ms (p95)
+- **Routers**: Handle HTTP requests and responses
+- **Core**: Business logic and algorithms (FSRS, Bayesian mastery, planning)
+- **Models**: Type-safe Pydantic schemas for API contracts
+- **Database**: SQLAlchemy ORM models and connection management
+- **Middleware**: Cross-cutting concerns (auth, logging, CORS)
 
-## 🤝 Contributing
+## 🤝 **Contributing**
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. **Fork** the repository
+2. **Create** feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to branch (`git push origin feature/amazing-feature`)
+5. **Open** Pull Request
 
-## 📄 License
+### **Development Guidelines**
+- Follow **PEP 8** style guide for Python
+- Use **type hints** throughout
+- Write **comprehensive tests** for new features
+- Update **documentation** for API changes
+- Run **pre-commit hooks** before submitting
+
+## 📄 **License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Support
+## � **Acknowledgments**
 
-- **Documentation**: [docs/](./docs/)
-- **Issues**: [GitHub Issues](https://github.com/aiden-krain/certcoach/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/aiden-krain/certcoach/discussions)
+- **FSRS Algorithm**: Inspired by the Free Spaced Repetition Scheduler
+- **Supabase**: For providing excellent backend-as-a-service platform
+- **FastAPI**: For the high-performance async Python framework
+- **Exam Providers**: Microsoft, Databricks for blueprint specifications
 
 ---
 
-**Note**: This is an MVP implementation focusing on DP-700 and Databricks Data Engineer Associate certifications. The architecture is designed to scale to additional certifications and advanced features.
+**Built with ❤️ for certification exam success**
