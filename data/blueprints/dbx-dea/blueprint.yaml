@@ -1,0 +1,234 @@
+# Databricks Data Engineer Associate Blueprint
+# Based on official Databricks exam outline
+# https://www.databricks.com/learn/certification/data-engineer-associate
+
+name: "Databricks Data Engineer Associate"
+version: "2024-12"
+status: "active"
+exam_id: "dbx-dea"
+description: "Data engineering with Apache Spark and Databricks platform"
+target_duration_hours: 100
+difficulty_level: "associate"
+
+# Official exam weights from Databricks
+objectives:
+  - id: "etl_spark_delta"
+    name: "ELT with Spark and Delta Lake"
+    weight: 0.40
+    description: "Extract, Load, Transform data using Spark SQL and Delta Lake"
+    parent_id: null
+    subskills:
+      - id: "etl_spark_delta.data_extraction"
+        name: "Extract data from various sources"
+        weight: 0.3
+        tasks:
+          - "Read data from cloud storage (S3, ADLS, GCS)"
+          - "Connect to JDBC data sources"
+          - "Ingest streaming data with Auto Loader"
+          - "Handle various file formats (Parquet, Delta, JSON, CSV)"
+          - "Configure data source options and schemas"
+      
+      - id: "etl_spark_delta.spark_transformations"
+        name: "Transform data with Spark SQL and DataFrame API"
+        weight: 0.4
+        tasks:
+          - "Write complex Spark SQL queries"
+          - "Use DataFrame API for data transformations"
+          - "Implement window functions and aggregations"
+          - "Handle missing and corrupt data"
+          - "Perform joins across multiple data sources"
+          - "Apply user-defined functions (UDFs)"
+      
+      - id: "etl_spark_delta.delta_lake_operations"
+        name: "Work with Delta Lake tables"
+        weight: 0.3
+        tasks:
+          - "Create and manage Delta Lake tables"
+          - "Implement ACID transactions"
+          - "Use Delta Lake time travel features"
+          - "Perform MERGE operations for CDC"
+          - "Handle schema evolution"
+          - "Configure table properties and constraints"
+
+  - id: "data_modeling_optimization"
+    name: "Data modeling and optimization"
+    weight: 0.25
+    description: "Design efficient data models and optimize performance"
+    parent_id: null
+    subskills:
+      - id: "data_modeling_optimization.table_design"
+        name: "Design optimal table structures"
+        weight: 0.4
+        tasks:
+          - "Choose appropriate partitioning strategies"
+          - "Implement Z-ordering for query optimization"
+          - "Design dimensional and fact table schemas"
+          - "Configure bloom filters and statistics"
+          - "Handle slowly changing dimensions (SCD)"
+      
+      - id: "data_modeling_optimization.performance_tuning"
+        name: "Optimize query and job performance"
+        weight: 0.35
+        tasks:
+          - "Use OPTIMIZE and VACUUM commands effectively"
+          - "Configure Spark cluster sizing and autoscaling"
+          - "Implement effective caching strategies"
+          - "Tune Spark configuration parameters"
+          - "Analyze query execution plans"
+      
+      - id: "data_modeling_optimization.storage_optimization"
+        name: "Optimize storage and costs"
+        weight: 0.25
+        tasks:
+          - "Implement data lifecycle management"
+          - "Configure compression and encoding"
+          - "Use Delta Lake liquid clustering"
+          - "Monitor and optimize storage costs"
+          - "Implement data archival strategies"
+
+  - id: "orchestration_governance"
+    name: "Orchestration and governance"
+    weight: 0.20
+    description: "Manage workflows, jobs, and data governance"
+    parent_id: null
+    subskills:
+      - id: "orchestration_governance.jobs_workflows"
+        name: "Create and manage jobs and workflows"
+        weight: 0.45
+        tasks:
+          - "Create and schedule Databricks jobs"
+          - "Configure job clusters and compute resources"
+          - "Implement job dependencies and workflows"
+          - "Handle job failures and retries"
+          - "Monitor job performance and costs"
+      
+      - id: "orchestration_governance.access_control"
+        name: "Implement access control and security"
+        weight: 0.35
+        tasks:
+          - "Configure Unity Catalog governance"
+          - "Implement table and column-level permissions"
+          - "Set up data lineage and audit logging"
+          - "Configure external locations and storage credentials"
+          - "Implement row-level security with dynamic views"
+      
+      - id: "orchestration_governance.data_quality"
+        name: "Ensure data quality and monitoring"
+        weight: 0.2
+        tasks:
+          - "Implement data quality checks and constraints"
+          - "Monitor data freshness and completeness"
+          - "Set up alerting for data quality issues"
+          - "Track data lineage and dependencies"
+          - "Implement data validation pipelines"
+
+  - id: "troubleshooting_optimization"
+    name: "Troubleshooting and performance tuning"
+    weight: 0.15
+    description: "Debug issues and optimize system performance"
+    parent_id: null
+    subskills:
+      - id: "troubleshooting_optimization.debugging"
+        name: "Debug Spark applications and jobs"
+        weight: 0.5
+        tasks:
+          - "Analyze Spark UI and logs for performance issues"
+          - "Identify and resolve memory and shuffle problems"
+          - "Debug failed tasks and stage failures"
+          - "Troubleshoot data skew and partition problems"
+          - "Resolve cluster and driver issues"
+      
+      - id: "troubleshooting_optimization.monitoring"
+        name: "Monitor and optimize costs"
+        weight: 0.3
+        tasks:
+          - "Monitor cluster utilization and costs"
+          - "Optimize compute resource allocation"
+          - "Implement cost-effective scaling strategies"
+          - "Track and optimize storage costs"
+          - "Use spot instances effectively"
+      
+      - id: "troubleshooting_optimization.best_practices"
+        name: "Apply performance best practices"
+        weight: 0.2
+        tasks:
+          - "Implement efficient data processing patterns"
+          - "Avoid common Spark anti-patterns"
+          - "Use appropriate file sizes and formats"
+          - "Optimize network and I/O operations"
+          - "Configure appropriate parallelism levels"
+
+# Key technical concepts frequently tested
+focus_areas:
+  - "Delta Lake ACID transactions and time travel"
+  - "Spark SQL optimization and execution plans"
+  - "Auto Loader for incremental data ingestion"
+  - "Unity Catalog governance and security"
+  - "Z-ordering and OPTIMIZE/VACUUM operations"
+  - "Spark cluster configuration and tuning"
+  - "Change data capture (CDC) with MERGE"
+  - "Data quality and constraint enforcement"
+
+# Common decision points in scenario questions
+decision_points:
+  - scenario: "Choosing between batch and streaming processing"
+    factors: ["Latency requirements", "Data volume", "Processing complexity", "Cost considerations"]
+  
+  - scenario: "Optimizing large table query performance"
+    factors: ["Partitioning strategy", "Z-ordering columns", "Caching approach", "Query patterns"]
+  
+  - scenario: "Implementing incremental data processing"
+    factors: ["Change detection method", "Auto Loader vs triggers", "Checkpointing strategy", "Error handling"]
+  
+  - scenario: "Managing compute costs and performance"
+    factors: ["Cluster sizing", "Autoscaling configuration", "Spot instance usage", "Job scheduling"]
+
+# Links to official Databricks documentation
+official_sources:
+  - title: "Databricks Data Engineer Associate Exam Guide"
+    url: "https://www.databricks.com/learn/certification/data-engineer-associate"
+    type: "exam_guide"
+  
+  - title: "Databricks Documentation"
+    url: "https://docs.databricks.com/"
+    type: "product_docs"
+  
+  - title: "Delta Lake Documentation"
+    url: "https://docs.delta.io/latest/"
+    type: "service_docs"
+  
+  - title: "Apache Spark Documentation"
+    url: "https://spark.apache.org/docs/latest/"
+    type: "service_docs"
+  
+  - title: "Unity Catalog Documentation"
+    url: "https://docs.databricks.com/data-governance/unity-catalog/"
+    type: "service_docs"
+
+# Estimated study timeline for different preparation levels
+study_timeline:
+  beginner: 
+    total_hours: 100
+    weeks: 10
+    hours_per_week: 10
+  
+  intermediate:
+    total_hours: 60
+    weeks: 6
+    hours_per_week: 10
+  
+  advanced:
+    total_hours: 30
+    weeks: 3
+    hours_per_week: 10
+
+# Lab exercises and hands-on practice areas
+hands_on_labs:
+  - "Setting up Delta Lake tables with partitioning"
+  - "Implementing CDC with MERGE operations"
+  - "Using Auto Loader for streaming ingestion"
+  - "Optimizing query performance with Z-ordering"
+  - "Creating and managing Databricks jobs"
+  - "Implementing Unity Catalog governance"
+  - "Troubleshooting Spark performance issues"
+  - "Building end-to-end ETL pipelines"

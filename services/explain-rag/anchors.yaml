@@ -1,0 +1,281 @@
+# Explain/RAG Service - Document Anchors Configuration
+# Allowlist of official documentation domains and sources for citation
+
+# Microsoft Fabric / Azure Documentation
+microsoft_docs:
+  - domain: "learn.microsoft.com"
+    base_url: "https://learn.microsoft.com"
+    license: "Microsoft Documentation License"
+    description: "Official Microsoft Learn documentation"
+    allowed_paths:
+      - "/fabric/"
+      - "/azure/data-factory/"
+      - "/azure/synapse-analytics/"
+      - "/azure/databricks/"
+      - "/certifications/exams/dp-700"
+    verification_keywords:
+      - "Microsoft"
+      - "Azure"
+      - "Fabric"
+      - "official"
+    last_verified: "2024-12-01"
+    check_frequency_days: 7
+
+  - domain: "docs.microsoft.com"
+    base_url: "https://docs.microsoft.com"
+    license: "Microsoft Documentation License" 
+    description: "Legacy Microsoft documentation (redirects to learn.microsoft.com)"
+    allowed_paths:
+      - "/azure/"
+      - "/sql/"
+    verification_keywords:
+      - "Microsoft"
+      - "Azure"
+    last_verified: "2024-12-01"
+    check_frequency_days: 14
+
+# Databricks Documentation
+databricks_docs:
+  - domain: "docs.databricks.com"
+    base_url: "https://docs.databricks.com"
+    license: "Databricks Documentation License"
+    description: "Official Databricks documentation"
+    allowed_paths:
+      - "/data-engineering/"
+      - "/delta/"
+      - "/spark/"
+      - "/unity-catalog/"
+      - "/jobs/"
+      - "/clusters/"
+      - "/security/"
+      - "/optimizations/"
+    verification_keywords:
+      - "Databricks"
+      - "Delta Lake"
+      - "Unity Catalog"
+      - "official"
+    last_verified: "2024-12-01"
+    check_frequency_days: 7
+
+  - domain: "www.databricks.com"
+    base_url: "https://www.databricks.com"
+    license: "Databricks Documentation License"
+    description: "Databricks certification and learning materials"
+    allowed_paths:
+      - "/learn/certification/"
+      - "/glossary/"
+      - "/blog/"  # Technical blog posts only
+    verification_keywords:
+      - "Databricks"
+      - "certification"
+      - "official"
+    last_verified: "2024-12-01"
+    check_frequency_days: 14
+
+# Apache Spark Documentation
+apache_spark:
+  - domain: "spark.apache.org"
+    base_url: "https://spark.apache.org"
+    license: "Apache License 2.0"
+    description: "Official Apache Spark documentation"
+    allowed_paths:
+      - "/docs/"
+      - "/api/"
+    verification_keywords:
+      - "Apache Spark"
+      - "PySpark"
+      - "Spark SQL"
+    last_verified: "2024-12-01"
+    check_frequency_days: 14
+
+# Delta Lake Documentation  
+delta_lake:
+  - domain: "docs.delta.io"
+    base_url: "https://docs.delta.io"
+    license: "Apache License 2.0"
+    description: "Official Delta Lake documentation"
+    allowed_paths:
+      - "/latest/"
+      - "/delta-core/"
+    verification_keywords:
+      - "Delta Lake"
+      - "ACID"
+      - "time travel"
+    last_verified: "2024-12-01"
+    check_frequency_days: 14
+
+# Python Documentation (for general Python concepts)
+python_docs:
+  - domain: "docs.python.org"
+    base_url: "https://docs.python.org"
+    license: "PSF License"
+    description: "Official Python documentation"
+    allowed_paths:
+      - "/3/"
+      - "/library/"
+    verification_keywords:
+      - "Python"
+      - "official"
+    last_verified: "2024-12-01"
+    check_frequency_days: 30
+
+# SQL Standard References
+sql_standards:
+  - domain: "www.iso.org"
+    base_url: "https://www.iso.org"
+    license: "ISO Copyright"
+    description: "ISO SQL standards (limited access)"
+    allowed_paths:
+      - "/standard/"
+    verification_keywords:
+      - "ISO"
+      - "SQL"
+      - "standard"
+    last_verified: "2024-12-01"
+    check_frequency_days: 90
+
+# Configuration for anchor verification
+verification:
+  # HTTP status codes considered valid
+  valid_status_codes: [200, 301, 302]
+  
+  # Timeout for verification requests (seconds)
+  timeout_seconds: 10
+  
+  # User agent for verification requests
+  user_agent: "CertCoach Documentation Verifier 1.0"
+  
+  # Rate limiting for verification requests
+  requests_per_minute: 30
+  
+  # Retry configuration
+  max_retries: 3
+  retry_delay_seconds: 2
+  
+  # SSL verification
+  verify_ssl: true
+
+# Content validation rules
+content_validation:
+  # Minimum content length to be considered valid
+  min_content_length: 100
+  
+  # Maximum content age (days) before re-verification
+  max_content_age_days: 30
+  
+  # Keywords that must be present for validation
+  required_keywords_count: 2
+  
+  # Patterns that indicate removed or moved content
+  removed_content_patterns:
+    - "404"
+    - "page not found"
+    - "content not available"
+    - "has been moved"
+    - "no longer available"
+  
+  # Patterns that indicate private/restricted content
+  restricted_content_patterns:
+    - "sign in"
+    - "login required"
+    - "access denied"
+    - "subscription required"
+    - "premium content"
+
+# Quarantine rules for problematic anchors
+quarantine:
+  # Automatic quarantine triggers
+  auto_quarantine_triggers:
+    - consecutive_failures: 3
+    - content_similarity_threshold: 0.9  # Too similar to existing content
+    - keyword_match_failure: true
+    - status_code_failure: true
+  
+  # Manual review queue thresholds
+  manual_review_thresholds:
+    - usage_count: 100  # High-usage anchors need manual verification
+    - user_reports: 3   # User-reported issues
+    - automated_flags: 2
+  
+  # Quarantine duration (days)
+  default_quarantine_days: 7
+  escalated_quarantine_days: 30
+
+# Content extraction configuration
+extraction:
+  # CSS selectors for different documentation sites
+  content_selectors:
+    "learn.microsoft.com":
+      - "main[role='main']"
+      - ".content"
+      - "article"
+    "docs.databricks.com":
+      - ".rst-content"
+      - "main"
+      - ".document"
+    "spark.apache.org":
+      - ".main-content"
+      - ".content"
+    "docs.delta.io":
+      - ".wy-nav-content"
+      - "main"
+  
+  # Elements to exclude from extraction
+  exclude_selectors:
+    - "nav"
+    - ".navigation"
+    - "footer"
+    - ".sidebar"
+    - ".breadcrumb"
+    - ".edit-page"
+    - ".feedback"
+  
+  # Maximum content length to extract
+  max_content_length: 50000
+  
+  # Text cleaning options
+  clean_text: true
+  preserve_code_blocks: true
+  preserve_links: true
+
+# Monitoring and alerting
+monitoring:
+  # Metrics to track
+  metrics:
+    - anchor_verification_success_rate
+    - anchor_response_time
+    - content_freshness_score
+    - quarantine_rate
+    - user_reported_issues
+  
+  # Alert thresholds
+  alerts:
+    verification_failure_rate_threshold: 0.1  # 10%
+    average_response_time_threshold: 5000     # 5 seconds
+    quarantine_rate_threshold: 0.05           # 5%
+  
+  # Alert destinations
+  alert_channels:
+    - email: "alerts@certcoach.com"
+    - slack: "#content-monitoring"
+    - webhook: "https://hooks.certcoach.com/alerts"
+
+# Compliance and legal
+compliance:
+  # Data retention for verification logs
+  log_retention_days: 90
+  
+  # User agent compliance
+  respect_robots_txt: true
+  
+  # Rate limiting compliance
+  default_crawl_delay: 1
+  
+  # Copyright compliance
+  fair_use_guidelines: true
+  attribution_required: true
+  
+  # GDPR compliance for user-generated anchors
+  user_consent_required: true
+  data_export_available: true
+  data_deletion_available: true

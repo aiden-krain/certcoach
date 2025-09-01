@@ -1,0 +1,177 @@
+# DP-700: Microsoft Fabric Data Engineer Associate Blueprint
+# Based on official Microsoft exam outline
+# https://learn.microsoft.com/en-us/certifications/exams/dp-700
+
+name: "DP-700 Microsoft Fabric Data Engineer Associate"
+version: "2024-12"
+status: "active"
+exam_id: "dp-700"
+description: "Implementing and managing data analytics solutions using Microsoft Fabric"
+target_duration_hours: 120
+difficulty_level: "associate"
+
+# Official exam weights from Microsoft
+objectives:
+  - id: "impl_manage_analytics"
+    name: "Implement and manage analytics solution architecture"
+    weight: 0.35
+    description: "Design and implement comprehensive analytics solutions"
+    parent_id: null
+    subskills:
+      - id: "impl_manage_analytics.fabric_workspace"
+        name: "Implement and manage Fabric workspace and items"
+        weight: 0.4
+        tasks:
+          - "Create and configure Fabric workspaces"
+          - "Manage workspace access and security"
+          - "Configure workspace settings and governance"
+          - "Implement workspace monitoring and auditing"
+      
+      - id: "impl_manage_analytics.security_governance"
+        name: "Implement and manage security and governance"
+        weight: 0.35
+        tasks:
+          - "Configure role-based access control (RBAC)"
+          - "Implement row-level security (RLS)"
+          - "Configure data loss prevention (DLP) policies"
+          - "Implement sensitivity labeling and classification"
+          - "Configure audit logging and compliance monitoring"
+      
+      - id: "impl_manage_analytics.fabric_items"
+        name: "Manage Fabric items lifecycle"
+        weight: 0.25
+        tasks:
+          - "Deploy and manage items across environments"
+          - "Implement version control and deployment pipelines"
+          - "Configure item dependencies and relationships"
+          - "Monitor item performance and usage"
+
+  - id: "ingest_transform_data"
+    name: "Ingest and transform data"
+    weight: 0.35
+    description: "Build data pipelines and transformation logic"
+    parent_id: null
+    subskills:
+      - id: "ingest_transform_data.data_pipelines"
+        name: "Implement data pipelines"
+        weight: 0.4
+        tasks:
+          - "Design and create data pipelines using Data Factory"
+          - "Configure pipeline triggers and scheduling"
+          - "Implement error handling and retry logic"
+          - "Monitor pipeline execution and performance"
+          - "Implement incremental data loading strategies"
+      
+      - id: "ingest_transform_data.lakehouse_warehouse"
+        name: "Implement lakehouse and warehouse solutions"
+        weight: 0.35
+        tasks:
+          - "Create and configure Fabric lakehouses"
+          - "Design and implement warehouse schemas"
+          - "Configure data retention and lifecycle policies"
+          - "Implement partitioning strategies"
+          - "Optimize storage and query performance"
+      
+      - id: "ingest_transform_data.spark_notebooks"
+        name: "Transform data using Spark and notebooks"
+        weight: 0.25
+        tasks:
+          - "Develop data transformation logic using PySpark"
+          - "Implement ETL/ELT processes with Spark"
+          - "Create and schedule notebook workflows"
+          - "Optimize Spark job performance"
+          - "Handle schema evolution and data quality"
+
+  - id: "monitor_optimize"
+    name: "Monitor and optimize analytics solution"
+    weight: 0.30
+    description: "Ensure performance, reliability, and cost optimization"
+    parent_id: null
+    subskills:
+      - id: "monitor_optimize.performance_monitoring"
+        name: "Monitor and optimize performance"
+        weight: 0.45
+        tasks:
+          - "Configure monitoring and alerting for Fabric items"
+          - "Analyze query performance and execution plans"
+          - "Implement performance optimization techniques"
+          - "Monitor capacity usage and scaling"
+          - "Troubleshoot performance bottlenecks"
+      
+      - id: "monitor_optimize.cost_management"
+        name: "Manage costs and capacity"
+        weight: 0.35
+        tasks:
+          - "Monitor and optimize compute and storage costs"
+          - "Configure capacity management and scaling"
+          - "Implement cost allocation and chargeback"
+          - "Optimize resource utilization"
+          - "Plan capacity requirements"
+      
+      - id: "monitor_optimize.disaster_recovery"
+        name: "Implement disaster recovery and business continuity"
+        weight: 0.2
+        tasks:
+          - "Configure backup and restore strategies"
+          - "Implement cross-region replication"
+          - "Design disaster recovery procedures"
+          - "Test business continuity plans"
+          - "Configure geo-redundancy options"
+
+# Skill areas that tend to appear frequently in exams
+focus_areas:
+  - "Data Factory pipeline design and implementation"
+  - "Lakehouse architecture and Delta Lake optimization"
+  - "Spark performance tuning and optimization"
+  - "Security implementation (RBAC, RLS, DLP)"
+  - "Monitoring and troubleshooting techniques"
+  - "Cost optimization strategies"
+
+# Common decision points that appear in scenario questions
+decision_points:
+  - scenario: "Choosing between lakehouse and warehouse for analytics workloads"
+    factors: ["Query patterns", "Data volume", "Real-time requirements", "Schema flexibility"]
+  
+  - scenario: "Implementing incremental data loading strategies"
+    factors: ["Change detection method", "Watermark strategy", "Performance requirements", "Data consistency"]
+  
+  - scenario: "Optimizing Spark job performance"
+    factors: ["Partitioning strategy", "Cluster configuration", "Caching approach", "Resource allocation"]
+  
+  - scenario: "Implementing security and governance"
+    factors: ["Data sensitivity", "Access patterns", "Compliance requirements", "Integration needs"]
+
+# Links to official Microsoft documentation
+official_sources:
+  - title: "DP-700 Exam Study Guide"
+    url: "https://learn.microsoft.com/en-us/certifications/exams/dp-700"
+    type: "exam_guide"
+  
+  - title: "Microsoft Fabric Documentation"
+    url: "https://learn.microsoft.com/en-us/fabric/"
+    type: "product_docs"
+  
+  - title: "Data Factory in Microsoft Fabric"
+    url: "https://learn.microsoft.com/en-us/fabric/data-factory/"
+    type: "service_docs"
+  
+  - title: "Lakehouse in Microsoft Fabric"
+    url: "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview"
+    type: "service_docs"
+
+# Estimated study timeline for different preparation levels
+study_timeline:
+  beginner: 
+    total_hours: 120
+    weeks: 12
+    hours_per_week: 10
+  
+  intermediate:
+    total_hours: 80
+    weeks: 8
+    hours_per_week: 10
+  
+  advanced:
+    total_hours: 40
+    weeks: 4
+    hours_per_week: 10

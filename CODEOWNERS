@@ -1,0 +1,36 @@
+*   @aiden-krain
+
+# Frontend Applications
+/apps/web/                    @aiden-krain
+/apps/mobile/                 @aiden-krain
+
+# Backend Services  
+/services/                    @aiden-krain
+/services/api-gateway/        @aiden-krain
+/services/planner/            @aiden-krain
+/services/practice-engine/    @aiden-krain
+/services/item-factory/       @aiden-krain
+/services/mastery-srs/        @aiden-krain
+/services/explain-rag/        @aiden-krain
+/services/telemetry/          @aiden-krain
+
+# Shared Packages
+/packages/                    @aiden-krain
+
+# Data & Configuration
+/data/blueprints/             @aiden-krain
+/data/seeds/                  @aiden-krain
+
+# Infrastructure
+/infra/                       @aiden-krain
+/.github/                     @aiden-krain
+
+# Documentation
+/docs/                        @aiden-krain
+README.md                     @aiden-krain
+
+# Configuration Files
+package.json                  @aiden-krain
+pyproject.toml               @aiden-krain
+turbo.json                   @aiden-krain
+.env.example                 @aiden-krain

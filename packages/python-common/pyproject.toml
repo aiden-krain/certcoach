@@ -1,0 +1,16 @@
+[project]
+name = "certcoach-python-common"
+version = "0.1.0"
+description = "Shared Python utilities for CertCoach services"
+dependencies = [
+    "pydantic>=2.5.0",
+    "sqlalchemy>=2.0.0",
+    "fastapi>=0.104.0",
+    "python-jose[cryptography]>=3.3.0",
+    "httpx>=0.25.0",
+    "structlog>=23.2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
